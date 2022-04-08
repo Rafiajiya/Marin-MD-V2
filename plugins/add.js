@@ -1,17 +1,49 @@
-let handler = async (m, { conn, text, participants }) => {
-if(!text && !m.quoted) throw 'masukkan nomor yang ingin di tambahkan'
+let fetch = require('node-fetch')
+let handler = async (m, { itsu, text, participants }) => {
 
-let users = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+if(!text) throw 'nomor?';
 
-await conn.groupParticipantsUpdate(m.chat, [users], 'add').catch(console.log)
+  let _participants = participants.map(user => user.jid)
+  let users = (await Promise.all(
+    text.split(',')
+      .map(v => v.replace(/[^0-9]/g, ''))
+      .filter(v => v.length > 4 && v.length < 20 && !_participants.includes(v + '@s.whatsapp.net'))
+      .map(async v => [
+        v,
+        await itsu.isOnWhatsApp(v + '@s.whatsapp.net')
+      ])
+  )).filter(v => v[1]).map(v => v[0] + '@c.us')
+  let response = await itsu.groupAdd(m.chat, users)
+  let pp = await itsu.getProfilePicture(m.chat).catch(_ => false)
+  let jpegThumbnail = pp ? await (await fetch(pp)).buffer() : false
+  for (let user of response.participants.filter(user => Object.values(user)[0].code == 403)) {
+    let [[jid, {
+      invite_code,
+      invite_code_exp
+    }]] = Object.entries(user)
+    let teks = `Mengundang @${jid.split('@')[0]} menggunakan invite...`
+    m.reply(teks, null, {
+      contextInfo: {
+        mentionedJid: itsu.parseMention(teks)
+      }
+    })
+    await itsu.sendGroupV4Invite(m.chat, jid, invite_code, invite_code_exp, false, 'Invitation to join my WhatsApp group', jpegThumbnail ? {
+      jpegThumbnail
+    } : {})
+  }
 }
-handler.help = ['add','+'].map(v => v + ' @user')
+handler.help = ['add', '+'].map(v => 'o' + v + ' @user')
 handler.tags = ['group']
-handler.command = /^(add|+)$/i
-
+handler.command = /^(add|\+)$/i
 handler.owner = false
+handler.mods = false
+handler.premium = false
 handler.group = true
+handler.private = false
+
+handler.admin = true
 handler.botAdmin = true
 
+handler.fail = null
 
 module.exports = handler
