@@ -35,7 +35,8 @@ const defaultMenu = {
 ┃⬡ *${Object.keys(global.db.data.users).length}* Pengguna
 ┃⬡ *${Object.entries(global.db.data.chats).filter(chat => chat[1].isBanned).length}* Chat Terbanned
 ┃⬡ *${Object.entries(global.db.data.users).filter(user => user[1].banned).length}* Pengguna Terbanned
-┃
+┃⬡
+┃⬡ TOLONG Jangan Spam Bot Ya🙏
 ┗⬣
   %readmore`.trimStart(), 
   header: '┏━━「 %category 」━⬣',
@@ -214,10 +215,12 @@ let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(
       const template = generateWAMessageFromContent(m.key.remoteJid, proto.Message.fromObject({
         listMessage: {
             title: `*${ucapan()}, ${name}*`,
-            description: `┏━━〔 *Ｍａｒｉｎ－ＭＤ* 〕━⬣\n┃⬡ 𝘼𝙠𝙩𝙞𝙛 𝙎𝙚𝙡𝙖𝙢𝙖 _*${uptime}*_\n┃⬡ _*${Object.keys(global.db.data.users).length}*_ 𝙋𝙚𝙣𝙜𝙜𝙪𝙣𝙖\n┃⬡ 𝙈𝙤𝙙𝙚 : *${global.opts['self'] ? 'Self' : 'publik'}*\n┗━━━━━━━━⬣`,
+            description: `┏━━〔 *RAFI-MD* 〕━⬣\n┃⬡ 𝘼𝙠𝙩𝙞𝙛 𝙎𝙚𝙡𝙖𝙢𝙖 _*${uptime}*_\n┃⬡ _*${Object.keys(global.db.data.users).length}*_ 𝙋𝙚𝙣𝙜𝙜𝙪𝙣𝙖\n┃⬡ 𝙈𝙤𝙙𝙚 : *${global.opts['self'] ? 'Self' : 'publik'}*\n┗━━━━━━━━⬣`,
+
+                         Kalo Fitur Error' Harap Dimaklumi Ya😉
             buttonText: 'LIST MENU',
             listType: 1,
-            footerText: "Join Group Bot\nhttps://chat.whatsapp.com/BkxbwERGX9x0mAhAsiDWxP\n>‿‿<",
+            footerText: "Join Group Animeh\nhttps://chat.whatsapp.com/IA6b8aMjbnJIOezh6W3du9\n>‿‿<",
             mtype: 'listMessage',
             sections: [
               {
@@ -246,7 +249,7 @@ let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(
                   "rowId": `${_p}? anime`
                 }, {
                   "title": "NSFW MENU",
-                  "description": "Menampilkan Menu Nsfw",
+                  "description": "Ingat Puasa Ngab",
                   "rowId": `${_p}? nsfw`
                 }, {
                   "title": "STICKER & CONVERTER",
